@@ -14,7 +14,7 @@ const BoardSchema = new Schema({
       ref: "List"
     }
   ]
-})
+}, { timestamps: true })
 
 const Board = mongoose.model('boards', BoardSchema);
 
