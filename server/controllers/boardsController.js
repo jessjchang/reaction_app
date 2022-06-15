@@ -11,47 +11,24 @@ const getBoards = (req, res, next) => {
 };
 
 const getBoard = (req, res, next) => {
-  const boardId = req.params.id
-  console.log(boardId)
-  Board.findById(boardId)
-    .populate("lists").then(list => res.json(list))
-  // .then(board => res.json(board))
-  // populate("lists").
-  // exec(function (err, board) {
-  //   if (err) return new HttpError("NO BOARD!", 404)
-  //   console.log(board)
-  // })
-  // then(board => {
-  //   console.log(board)
-  //   board.populate({
-  //     path: "lists",
-  //     populate: {
-  //       path: "cards",
-  //       model: "Card"
-  //     }
-  //   })
-  // }
-// )
+  const boardId = req.params.id;
 
-    // "lists")
-    // .populate({
-    //   path: "lists",
-    //   populate: {
-    //     path: "cards",
-    //     model: "Card"
-    //   }
-    // })
-  //   .then((board) => {
-  //     console.log(board)
-  //     if (!board) {
-  //       return next(new HttpError("Board with specified ID does not exist", 404))
-  //     }
-  //     res.json(board)
-  //   })
-  //   .catch((err) =>
-  //     next(new HttpError("Retrieving board failed, please try again", 500))
-  // );
-};
+  Board.findById(boardId).populate({
+    path: "lists",
+    populate: {
+      path: "cards",
+      model: "Card"
+    }
+  }).then((board) => {
+    if (!board) {
+      return next(new HttpError("Board with specified ID does not exist", 404));
+    } else {
+      res.json(board);
+    }
+  }).catch((err) =>
+    next(new HttpError("Retrieving board failed, please try again", 500))
+  );
+}
 
 const createBoard = (req, res, next) => {
   const errors = validationResult(req);
