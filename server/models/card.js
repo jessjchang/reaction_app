@@ -54,6 +54,6 @@ const CardSchema = new Schema({
   }
 }, { timestamps: true })
 
-const Card = mongoose.model('cards', CardSchema);
+const Card = mongoose.model('Card', CardSchema);
 
 module.exports = Card;

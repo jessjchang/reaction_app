@@ -1,5 +1,7 @@
 const Board = require("../models/board");
 const HttpError = require("../models/httpError");
+const Card = require("../models/card");
+const List = require("../models/list");
 const { validationResult } = require("express-validator");
 
 const getBoards = (req, res, next) => {
@@ -11,12 +13,14 @@ const getBoards = (req, res, next) => {
 const getBoard = (req, res, next) => {
   const boardId = req.params.id
   console.log(boardId)
-  Board.findById(boardId).
-  populate("lists").
-  exec(function (err, board) {
-    if (err) return new HttpError("NO BOARD!", 404)
-    console.log(board)
-  })
+  Board.findById(boardId)
+    .populate("lists").then(list => res.json(list))
+  // .then(board => res.json(board))
+  // populate("lists").
+  // exec(function (err, board) {
+  //   if (err) return new HttpError("NO BOARD!", 404)
+  //   console.log(board)
+  // })
   // then(board => {
   //   console.log(board)
   //   board.populate({
