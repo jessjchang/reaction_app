@@ -15,6 +15,14 @@ axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
 axios.defaults.headers.common["Accept"] = "application/json";
 
 const apiClient = {
+  getBoard: async (id) => {
+    try {
+      const { data } = await axios.get(`${routes.BOARDS_INDEX_URL}/${id}`);
+      return data;
+    } catch (e) {
+      logError(e);
+    }
+  },
   getBoards: async () => {
     try {
       const { data } = await axios.get(routes.BOARDS_INDEX_URL);
