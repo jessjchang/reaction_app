@@ -17,8 +17,7 @@ const CardSchema = new Schema({
     }
   ],
   position: {
-    type: Number,
-    required: true
+    type: Number
   },
   archived: {
     type: Boolean,
@@ -43,6 +42,7 @@ const CardSchema = new Schema({
   ],
   commentsCount: {
     type: Number,
+    default: 0
   },
   listId: {
     type: ObjectId,
@@ -52,8 +52,8 @@ const CardSchema = new Schema({
     type: ObjectId,
     ref: "Board"
   }
-})
+}, { timestamps: true })
 
-const Card = mongoose.model('cards', CardSchema);
+const Card = mongoose.model('Card', CardSchema);
 
 module.exports = Card;

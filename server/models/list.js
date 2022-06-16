@@ -9,8 +9,7 @@ const ListSchema = new Schema({
     required: [true, 'The List title is required']
   },
   position: {
-    type: Number,
-    required: true
+    type: Number
   },
   boardId: {
     type: ObjectId,
@@ -22,8 +21,8 @@ const ListSchema = new Schema({
       ref: "Card"
     }
   ]
-})
+}, { timestamps: true })
 
-const List = mongoose.model('lists', ListSchema);
+const List = mongoose.model('List', ListSchema);
 
 module.exports = List;
