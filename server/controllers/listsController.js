@@ -37,4 +37,14 @@ const createList = (req, res, next) => {
   }
 };
 
+const editList = (req, res, next) => {
+  List.findOneAndUpdate({_id: req.params.id}, req.body, { new: true }).then(list => {
+    res.json(list)
+  })
+  .catch(err => {
+    next(new HttpError("Editing list failed, please try again", 500))
+  });
+}
+
 exports.createList = createList;
+exports.editList = editList;

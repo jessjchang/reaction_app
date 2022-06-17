@@ -1,0 +1,6 @@
+PUT http://localhost:5001/api/lists/62acc427fe7dde312a91c0d4
+Content-Type: application/json
+
+{
+  "title": "LISTI LISTI LISTI"
+}
