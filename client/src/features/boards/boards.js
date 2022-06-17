@@ -22,10 +22,7 @@ export const createBoard = createAsyncThunk(
 export const fetchBoard = createAsyncThunk(
   "boards/fetchBoard",
   async (id) => {
-    console.log('in fetchBoard Thunk creator; id is ', id);
     const data = await apiClient.getBoard(id);
-
-    console.log('in fetchBoard Thunk creator; data is ', data);
 
     return data;
   }
@@ -49,8 +46,9 @@ const boardSlice = createSlice({
     });
 
     builder.addCase(fetchBoard.fulfilled, (state, action) => {
+      //eslint-disable-next-line
       const { lists, ...boardWithoutLists } = action.payload;
-      const foundBoard = state.find(board => board._id === boardWithoutLists._id);
+      const foundBoard = state.find(board => board._id === action.payload._id);
 
       if (foundBoard) {
         return state;

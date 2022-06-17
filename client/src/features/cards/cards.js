@@ -1,4 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import apiClient from "../../lib/ApiClient";
 import { fetchBoard } from "../boards/boards";
 
 const initialState = [];
@@ -28,22 +29,19 @@ const initialState = [];
 //   }
 // );
 
-const listSlice = createSlice({
-  name: "lists",
+const cardSlice = createSlice({
+  name: "cards",
   initialState,
   reducers: {},
-  extraReducers: (builder) => {
-    builder.addCase(fetchBoard.fulfilled, (state, action) => {
-      const listsNotInCurrentBoard = state.filter(list => list.boardId !== action.payload._id);
-      const listsInCurrentBoardWithoutCards = action.payload.lists.reduce((acc, list) => {
-        //eslint-disable-next-line
-        const { cards, ...listWithoutCards } = list;
-        return acc.concat(listWithoutCards);
-      }, []);
+  // extraReducers: (builder) => {
+  //   builder.addCase(fetchBoard.fulfilled, (state, action) => {
+  //     // lists property will point to an array containing an object with cards property (pointing to an array of card objects) and list properties, which we want to extract
+  //     const cards = action.payload.reduce((acc, list) => {
 
-      return listsNotInCurrentBoard.concat(listsInCurrentBoardWithoutCards);
-    });
-  },
+  //       // const {  }
+  //     }, []);
+  //   });
+  // },
 });
 
-export default listSlice.reducer;
+export default cardSlice.reducer;
