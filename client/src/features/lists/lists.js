@@ -3,31 +3,6 @@ import { fetchBoard } from "../boards/boards";
 
 const initialState = [];
 
-// export const fetchBoards = createAsyncThunk("boards/fetchBoards", async () => {
-//   const data = await apiClient.getBoards();
-//   return data;
-// });
-
-// export const createBoard = createAsyncThunk(
-//   "boards/createBoard",
-//   async (newBoard, callback) => {
-//     const data = await apiClient.createBoard(newBoard);
-//     if (callback) {
-//       callback;
-//     }
-//     return data;
-//   }
-// );
-
-// export const fetchBoard = createAsyncThunk(
-//   "boards/fetchBoard",
-//   async (id) => {
-//     const data = await apiClient.fetchBoard(id);
-
-//     return data;
-//   }
-// );
-
 const listSlice = createSlice({
   name: "lists",
   initialState,
