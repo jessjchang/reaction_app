@@ -4,12 +4,23 @@ const Card = require("../models/card");
 const List = require("../models/list");
 const { validationResult } = require("express-validator");
 
-const createList = (req, res, next) => {
-  const errors = validationResult(req);
+const addListToBoard = (boardId, newListId) => {
+  Board.findById(boardId).then(board => {
+    // Board.findOneAndUpdate({ _id: boardId }, { lists: board.lists.concat(newListId) })
+    board.lists = board.lists.concat(newListId);
+    board.save();
+  })
+  .catch(err => {
+    next(new HttpError("Adding list to board failed, please try again", 500))
+  });
+}
 
+const createList = (req, res, next) => {
+  const errors = validationResult(req.body);
   if (errors.isEmpty()) {
-    List.create(req.body.list)
+    List.create({"title": req.body.title, "boardId": req.body.boardId})
       .then((list) => {
+        addListToBoard(list.boardId, list._id);
         res.json({
           title: list.title,
           _id: list._id,
