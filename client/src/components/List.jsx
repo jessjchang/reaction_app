@@ -1,4 +1,5 @@
 import React from "react";
+import Cards from "./Cards";
 
 const List = ({ listInfo }) => {
   return (
@@ -9,15 +10,17 @@ const List = ({ listInfo }) => {
           <div>
             <p className="list-title">{listInfo.title}</p>
           </div>
-          <div className="add-dropdown add-top">
+          <Cards listId={listInfo._id} />
+
+          {/* <div className="add-dropdown add-top">
             <div className="card"></div>
             <a className="button">Add</a>
             <i className="x-icon icon"></i>
             <div className="add-options">
               <span>...</span>
             </div>
-          </div>
-          <div id="cards-container" data-id="list-1-cards">
+          </div> */}
+          {/* <div id="cards-container" data-id="list-1-cards">
             <div className="card-background">
               <div className="card ">
                 <i className="edit-toggle edit-icon sm-icon"></i>
@@ -68,25 +71,8 @@ const List = ({ listInfo }) => {
                 <div className="card-icons"></div>
               </div>
             </div>
-          </div>
-          <div className="add-dropdown add-bottom">
-            <div className="card">
-              <div className="card-info"></div>
-              <textarea name="add-card"></textarea>
-              <div className="members"></div>
-            </div>
-            <a className="button">Add</a>
-            <i className="x-icon icon"></i>
-            <div className="add-options">
-              <span>...</span>
-            </div>
-          </div>
-          <div className="add-card-toggle" data-position="bottom">
-            Add a card...
-          </div>
-        </div>
-      </div>
-    </div>
+          </div> */
+
     // <div className="list-wrapper">
     //   <div className="list-background">
     //     <div className="list">
@@ -210,7 +196,11 @@ const List = ({ listInfo }) => {
     //       <div className="add-card-toggle" data-position="bottom">
     //         Add a card...
     //       </div>
-    //     </div>
+  //     </div> */
+                    }
+        </div>
+      </div>
+    </div>
   );
 };
 
