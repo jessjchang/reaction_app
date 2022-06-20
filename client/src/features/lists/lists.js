@@ -1,7 +1,29 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { fetchBoard } from "../boards/boards";
+import apiClient from "../../lib/ApiClient";
 
 const initialState = [];
+
+export const createList = createAsyncThunk(
+  "lists/createList",
+  async ({title, boardId, callback}) => {
+    const data = await apiClient.createList({title, boardId});
+
+    if (callback) {
+      callback();
+    }
+
+    return data;
+  }
+);
+
+export const editList = createAsyncThunk(
+  "lists/editList",
+  async ({id, updatedListInfo}) => {
+    const data = await apiClient.editList(id, updatedListInfo);
+    return data;
+  }
+)
 
 const listSlice = createSlice({
   name: "lists",
@@ -17,6 +39,16 @@ const listSlice = createSlice({
       }, []);
 
       return listsNotInCurrentBoard.concat(listsInCurrentBoardWithoutCards);
+    });
+
+    builder.addCase(createList.fulfilled, (state, action) => {
+      const newState =  state.concat(action.payload);
+      return newState;
+      // return state.concat(action.payload);
+    });
+
+    builder.addCase(editList.fulfilled, (state, action) => {
+      return state.map(list => list._id === action.payload._id ? action.payload : list)
     });
   },
 });

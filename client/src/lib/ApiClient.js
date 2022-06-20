@@ -39,6 +39,22 @@ const apiClient = {
       logError(e);
     }
   },
+  createList: async ({title, boardId}) => {
+    try {
+      const { data } = await axios.post(routes.CREATE_LIST_URL, { title, boardId });
+      return data;
+    } catch (e) {
+      logError(e);
+    }
+  },
+  editList: async (id, updatedListInfo) => {
+    try {
+      const { data } = await axios.put(`${routes.LISTS_INDEX_URL}/${id}`, updatedListInfo);
+      return data;
+    } catch (e) {
+      logError(e);
+    }
+  }
 };
 
 export default apiClient;
