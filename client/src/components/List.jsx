@@ -1,14 +1,42 @@
 import React from "react";
 import Cards from "./Cards";
+import { useState } from 'react';
+import { useDispatch } from "react-redux";
+import { editList } from "../features/lists/lists";
 
 const List = ({ listInfo }) => {
+  const dispatch = useDispatch();
+  const [titleEditable, setTitleEditable] = useState(false);
+  const [title, setTitle] = useState(listInfo.title);
+
+  const handleTitleEditable = () => {
+    setTitleEditable(true);
+  }
+
+  const handleTitleInputChange = (event) => {
+    setTitle(event.target.value);
+  }
+
+  const handleEditTitle = () => {
+    dispatch(editList({id: listInfo._id, updatedListInfo: {"title": title}}));
+    setTitleEditable(false);
+  }
+
   return (
     <div className="list-wrapper">
       <div className="list-background">
         <div className="list">
           <a className="more-icon sm-icon" href=""></a>
           <div>
-            <p className="list-title">{listInfo.title}</p>
+            {titleEditable ?
+              <input
+                className="list-title"
+                onChange={handleTitleInputChange}
+                value={title}
+                onBlur={handleEditTitle}
+               /> :
+              <p onClick={handleTitleEditable} className="list-title">{listInfo.title}</p>
+            }
           </div>
           <Cards listId={listInfo._id} />
 
