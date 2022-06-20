@@ -1,0 +1,8 @@
+POST http://localhost:5001/api/cards
+Content-Type: application/json
+
+{
+    "boardId": "62a9fd8f7c3883bc7f1ee9f8",
+    "listId": "62a9fc6f7c3883bc7f1ee9f5",
+    "title": "CARDY CARDY CARDY"
+}
