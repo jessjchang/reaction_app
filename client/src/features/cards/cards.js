@@ -4,6 +4,19 @@ import { fetchBoard } from "../boards/boards";
 
 const initialState = [];
 
+export const createCard = createAsyncThunk(
+  "cards/createCard",
+  async ({title, boardId, listId, callback}) => {
+    const data = await apiClient.createCard({title, boardId, listId});
+
+    if (callback) {
+      callback();
+    }
+
+    return data;
+  }
+);
+
 const cardSlice = createSlice({
   name: "cards",
   initialState,
@@ -17,6 +30,10 @@ const cardSlice = createSlice({
       }, []);
 
       return cardsNotInCurrentBoard.concat(cardsInCurrentBoard);
+    });
+
+    builder.addCase(createCard.fulfilled, (state, action) => {
+      return state.concat(action.payload);
     });
   },
 });

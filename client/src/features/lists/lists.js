@@ -42,9 +42,7 @@ const listSlice = createSlice({
     });
 
     builder.addCase(createList.fulfilled, (state, action) => {
-      const newState =  state.concat(action.payload);
-      return newState;
-      // return state.concat(action.payload);
+      return state.concat(action.payload);
     });
 
     builder.addCase(editList.fulfilled, (state, action) => {

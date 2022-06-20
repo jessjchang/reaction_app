@@ -27,7 +27,7 @@ const addCardToList = (listId, newCardId) => {
   .catch(err => {
     next(new HttpError("Adding card to list failed, please try again", 500))
   });
-}
+};
 
 const createCard = (req, res, next) => {
   const errors = validationResult(req.body);
