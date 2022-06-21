@@ -29,10 +29,13 @@ const addCardToList = (listId, newCardId) => {
   });
 };
 
-const createCard = (req, res, next) => {
+const createCard = async (req, res, next) => {
   const errors = validationResult(req.body);
+
   if (errors.isEmpty()) {
-    Card.create({"title": req.body.title, "boardId": req.body.boardId, "listId": req.body.listId})
+    const { boardId } = await List.findById(req.body.listId);
+
+    Card.create({"title": req.body.card.title, boardId, "listId": req.body.listId})
       .then((card) => {
         addCardToList(card.listId, card._id);
         res.json({
