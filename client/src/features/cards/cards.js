@@ -6,8 +6,8 @@ const initialState = [];
 
 export const createCard = createAsyncThunk(
   "cards/createCard",
-  async ({title, boardId, listId, callback}) => {
-    const data = await apiClient.createCard({title, boardId, listId});
+  async ({title, listId, callback}) => {
+    const data = await apiClient.createCard(title, listId);
 
     if (callback) {
       callback();

@@ -3,16 +3,21 @@ import { useState } from 'react';
 import { useDispatch } from "react-redux";
 import { createCard } from "../features/cards/cards";
 
-// COPIED OVER FROM ADDLISTFORM - NEED TO ADJUST FOR ADDING CARD
-const AddCardForm = ({boardId}) => {
+const AddCardForm = ({ listId, activeListId, setActiveListId }) => {
   const dispatch = useDispatch();
 
-  const [createListVisible, setCreateListVisible] = useState(false);
-  const createListClassName = createListVisible ? 'new-list selected' : 'new-list';
+  // const [createCardFormVisible, setCreateCardFormVisible] = useState(false);
+  const createCardFormVisible = listId === activeListId;
   const [title, setTitle] = useState('');
 
-  const toggleCreateListButtonVisible = () => {
-    setCreateListVisible(!createListVisible);
+  const addCardFormClassName = createCardFormVisible ? 'active-card' : '';
+  const displayFormLinkClassName = createCardFormVisible ? 'add-card-toggle' : '';
+
+  //
+
+  const toggleCreateCardVisible = () => {
+    // setCreateCardFormVisible(!createCardFormVisible);
+    setActiveListId(listId);
   };
 
   const handleTitleInputChange = (event) => {
@@ -23,20 +28,38 @@ const AddCardForm = ({boardId}) => {
     setTitle('');
   };
 
-  const handleCreateList = (event) => {
+  const handleCreateCard = (event) => {
     event.preventDefault();
-    dispatch(createList({ title, boardId, callback: resetTitle }));
+    dispatch(createCard({ title, listId, callback: resetTitle }));
   };
 
   return (
-    <div id="new-list" className={createListClassName}>
-      <span onClick={toggleCreateListButtonVisible}>Add a list...</span>
-      <input onChange={handleTitleInputChange} type="text" placeholder="Add a list..." value={title} />
-      <div>
-        <input onClick={handleCreateList} type="submit" className="button" value="Save" />
-        <i onClick={toggleCreateListButtonVisible} className="x-icon icon"></i>
+    // <div id="new-list" className={createListClassName}>
+    //   <span onClick={toggleCreateListButtonVisible}>Add a list...</span>
+    //   <input onChange={handleTitleInputChange} type="text" placeholder="Add a list..." value={title} />
+    //   <div>
+    //     <input onClick={handleCreateList} type="submit" className="button" value="Save" />
+    //     <i onClick={toggleCreateListButtonVisible} className="x-icon icon"></i>
+    //   </div>
+    // </div>
+    <>
+      <div className={`add-dropdown add-bottom ${addCardFormClassName}`}>
+        <div className="card">
+          <div className="card-info"></div>
+          <textarea name="add-card" value={title} onChange={handleTitleInputChange}></textarea>
+          <div className="members"></div>
+        </div>
+        <a className="button" onClick={handleCreateCard}>Add</a>
+        <i className="x-icon icon"></i>
+        <div className="add-options">
+          <span>...</span>
+        </div>
       </div>
-    </div>
+
+      <div className={displayFormLinkClassName} onClick={toggleCreateCardVisible} data-position="bottom">
+        Add a card...
+      </div>
+    </>
   );
 };
 
