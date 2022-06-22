@@ -1,10 +1,11 @@
 import React from "react";
 import Cards from "./Cards";
+import AddCardForm from "./AddCardForm";
 import { useState } from 'react';
 import { useDispatch } from "react-redux";
 import { editList } from "../features/lists/lists";
 
-const List = ({ listInfo }) => {
+const List = ({ listInfo, activeListId, setActiveListId }) => {
   const dispatch = useDispatch();
   const [titleEditable, setTitleEditable] = useState(false);
   const [title, setTitle] = useState(listInfo.title);
@@ -23,7 +24,7 @@ const List = ({ listInfo }) => {
   }
 
   return (
-    <div className="list-wrapper">
+    <div className="list-wrapper add-dropdown-active">
       <div className="list-background">
         <div className="list">
           <a className="more-icon sm-icon" href=""></a>
@@ -39,8 +40,9 @@ const List = ({ listInfo }) => {
             }
           </div>
           <Cards listId={listInfo._id} />
+          <AddCardForm activeListId={activeListId} setActiveListId={setActiveListId} listId={listInfo._id} />
 
-          <div className="add-dropdown add-bottom">
+          {/* <div className="add-dropdown add-bottom">
             <div className="card">
               <div className="card-info"></div>
               <textarea name="add-card"></textarea>
@@ -55,7 +57,7 @@ const List = ({ listInfo }) => {
 
           <div className="add-card-toggle" data-position="bottom">
             Add a card...
-          </div>
+          </div> */}
 {/*
           <div className="add-dropdown add-top">
             <div className="card"></div>
