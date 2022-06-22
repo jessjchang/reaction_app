@@ -1,22 +1,22 @@
 import React from "react";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useDispatch } from "react-redux";
 import { createCard } from "../features/cards/cards";
 
 const AddCardForm = ({ listId, activeListId, setActiveListId }) => {
   const dispatch = useDispatch();
 
-  // const [createCardFormVisible, setCreateCardFormVisible] = useState(false);
   const createCardFormVisible = listId === activeListId;
   const [title, setTitle] = useState('');
 
   const addCardFormClassName = createCardFormVisible ? 'active-card' : '';
   const displayFormLinkClassName = createCardFormVisible ? 'add-card-toggle' : '';
 
-  //
+  useEffect(() => {
+    resetTitle();
+  }, [activeListId])
 
   const toggleCreateCardVisible = () => {
-    // setCreateCardFormVisible(!createCardFormVisible);
     setActiveListId(listId);
   };
 
@@ -34,14 +34,6 @@ const AddCardForm = ({ listId, activeListId, setActiveListId }) => {
   };
 
   return (
-    // <div id="new-list" className={createListClassName}>
-    //   <span onClick={toggleCreateListButtonVisible}>Add a list...</span>
-    //   <input onChange={handleTitleInputChange} type="text" placeholder="Add a list..." value={title} />
-    //   <div>
-    //     <input onClick={handleCreateList} type="submit" className="button" value="Save" />
-    //     <i onClick={toggleCreateListButtonVisible} className="x-icon icon"></i>
-    //   </div>
-    // </div>
     <>
       <div className={`add-dropdown add-bottom ${addCardFormClassName}`}>
         <div className="card">
