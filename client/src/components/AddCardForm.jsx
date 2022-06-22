@@ -6,18 +6,21 @@ import { createCard } from "../features/cards/cards";
 const AddCardForm = ({ listId, activeListId, setActiveListId }) => {
   const dispatch = useDispatch();
 
-  const createCardFormVisible = listId === activeListId;
+  const [createCardFormVisible, setCreateCardFormVisible] = useState(false);
   const [title, setTitle] = useState('');
 
   const addCardFormClassName = createCardFormVisible ? 'active-card' : '';
   const displayFormLinkClassName = createCardFormVisible ? 'add-card-toggle' : '';
 
   useEffect(() => {
+    setCreateCardFormVisible(listId === activeListId)
     resetTitle();
-  }, [activeListId])
+  }, [activeListId, listId]);
 
   const toggleCreateCardVisible = () => {
     setActiveListId(listId);
+    setCreateCardFormVisible(!createCardFormVisible);
+    resetTitle();
   };
 
   const handleTitleInputChange = (event) => {
@@ -42,7 +45,7 @@ const AddCardForm = ({ listId, activeListId, setActiveListId }) => {
           <div className="members"></div>
         </div>
         <a className="button" onClick={handleCreateCard}>Add</a>
-        <i className="x-icon icon"></i>
+        <i className="x-icon icon" onClick={toggleCreateCardVisible}></i>
         <div className="add-options">
           <span>...</span>
         </div>
