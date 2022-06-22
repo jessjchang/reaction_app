@@ -55,5 +55,31 @@ const createCard = async (req, res, next) => {
   }
 };
 
+// {
+//   "cardId": 9,
+//   "comment": {
+//     "text": "This is my comment"
+//   }
+// }
+const createComment = (req, res, next) => {
+  const errors = validationResult(req.body);
+
+  if (errors.isEmpty()) {
+    Card.findById(req.body.cardId)
+      .then((card) => {
+        card.comments = card.comments.concat(req.body.comment.text);
+        card.commentsCount = card.comments.length;
+        card.save();
+        res.json(card);
+      })
+      .catch((err) =>
+        next(new HttpError("Creating comment failed, please try again", 500))
+      );
+  } else {
+    return next(new HttpError("The input field is empty.", 404));
+  }
+};
+
 exports.getCard = getCard;
 exports.createCard = createCard;
+exports.createComment = createComment;
