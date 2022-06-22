@@ -17,6 +17,15 @@ export const createCard = createAsyncThunk(
   }
 );
 
+export const fetchCard = createAsyncThunk(
+  "cards/fetchCard",
+  async (id) => {
+    const data = await apiClient.getCard(id);
+
+    return data;
+  }
+);
+
 const cardSlice = createSlice({
   name: "cards",
   initialState,
@@ -34,6 +43,11 @@ const cardSlice = createSlice({
 
     builder.addCase(createCard.fulfilled, (state, action) => {
       return state.concat(action.payload);
+    });
+
+    builder.addCase(fetchCard.fulfilled, (state, action) => {
+      const cardsNotMatchingCurrent = state.filter(card => card._id !== action.payload._id);
+      return cardsNotMatchingCurrent.concat(action.payload);
     });
   },
 });

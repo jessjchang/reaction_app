@@ -1,6 +1,7 @@
 import React from "react";
 import Card from "./Card";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 const Cards = ({ listId }) => {
   const cards = useSelector(state => state.cards);
@@ -8,7 +9,11 @@ const Cards = ({ listId }) => {
 
   return (
     <div id="cards-container" data-id="list-1-cards">
-      {currentCards.map(card => <Card key={card._id} cardInfo={card} />)}
+      {currentCards.map(card => (
+        <Link key={card._id} to={`/cards/${card._id}`}>
+          <Card cardInfo={card} />
+        </Link>
+      ))}
     </div>
   );
 };

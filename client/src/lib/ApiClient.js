@@ -65,7 +65,15 @@ const apiClient = {
     } catch (e) {
       logError(e);
     }
-  }
+  },
+  getCard: async (id) => {
+    try {
+      const { data } = await axios.get(`${routes.CARDS_INDEX_URL}/${id}`);
+      return data;
+    } catch (e) {
+      logError(e);
+    }
+  },
 };
 
 export default apiClient;
