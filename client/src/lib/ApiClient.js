@@ -66,6 +66,15 @@ const apiClient = {
       logError(e);
     }
   },
+  editCard: async (cardId, card) => {
+    try {
+      const { data } = await axios.put(`${routes.CARDS_INDEX_URL}/${cardId}`, {
+        card,
+      })
+    } catch (e) {
+      logError(e);
+    }
+  },
   getCard: async (id) => {
     try {
       const { data } = await axios.get(`${routes.CARDS_INDEX_URL}/${id}`);
