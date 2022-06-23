@@ -3,5 +3,7 @@ Content-Type: application/json
 
 {
     "boardId": "62a9fd8f7c3883bc7f1ee9f8",
-    "title": "LISTY LISTY LIST"
+    "list": {
+      "title": ""
+    }
 }

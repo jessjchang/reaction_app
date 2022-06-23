@@ -20,7 +20,6 @@ const getCard = (req, res, next) => {
 
 const addCardToList = (listId, newCardId) => {
   List.findById(listId).then(list => {
-    // Board.findOneAndUpdate({ _id: boardId }, { lists: board.lists.concat(newListId) })
     list.cards = list.cards.concat(newCardId);
     list.save();
   })
@@ -74,18 +73,37 @@ const createComment = (req, res, next) => {
   }
 };
 
-// - `title` - not empty
-// - `listId` - not empty, needs to be a valid one that exists
-// - `position` - not empty
-// - `description` - not empty
-// - `archived` - must be a boolean
-// - `dueDate` - not empty (validate it's a type date/parse it as such??)
-// - `completed` - not empty
-// - `labels` - not empty
-const validAttributePresent = (reqBody) => {
+const editCard = (req, res, next) => {
+  const errors = validationResult(req.body);
 
-}
+  if (errors.isEmpty()) {
+    Card.findById(req.params.id)
+      .then((card) => {
+        console.log('card', card);
+
+        const attributes = ['title', 'dueDate', 'archived', 'completed', 'description', 'position', 'listId',  'dueDate' ];
+
+        for (const attribute of attributes) {
+          card[attribute] = req.body.card[attribute] || card[attribute];
+        }
+
+        if (req.body.card.labels) {
+          card.labels = card.labels.concat(req.body.card.labels);
+        }
+
+        card.save();
+        res.json(card);
+      })
+      .catch((err) =>
+        next(new HttpError("Editing card failed, please try again", 500))
+      );
+  } else {
+    console.log('validator error(s?) ', errors);
+    return next(new HttpError("Invalid card edit.", 404));
+  }
+};
 
 exports.getCard = getCard;
 exports.createCard = createCard;
 exports.createComment = createComment;
+exports.editCard = editCard;
