@@ -55,5 +55,37 @@ const createCard = async (req, res, next) => {
   }
 };
 
+const createComment = (req, res, next) => {
+  const errors = validationResult(req.body);
+
+  if (errors.isEmpty()) {
+    Card.findById(req.body.cardId)
+      .then((card) => {
+        card.comments = card.comments.concat(req.body.comment.text);
+        card.commentsCount = card.comments.length;
+        card.save();
+        res.json(card);
+      })
+      .catch((err) =>
+        next(new HttpError("Creating comment failed, please try again", 500))
+      );
+  } else {
+    return next(new HttpError("The input field is empty.", 404));
+  }
+};
+
+// - `title` - not empty
+// - `listId` - not empty, needs to be a valid one that exists
+// - `position` - not empty
+// - `description` - not empty
+// - `archived` - must be a boolean
+// - `dueDate` - not empty (validate it's a type date/parse it as such??)
+// - `completed` - not empty
+// - `labels` - not empty
+const validAttributePresent = (reqBody) => {
+
+}
+
 exports.getCard = getCard;
 exports.createCard = createCard;
+exports.createComment = createComment;
