@@ -1,7 +1,15 @@
 import React from "react";
+import { useState } from "react";
 
 const CardModalHeader = ({cardTitle, listTitle}) => {
   if (!cardTitle || !listTitle) return null;
+
+  // change variable name to account for original title and edited (if at all) title?
+  [ cardTitle, setCardTitle ] = useState(cardTitle);
+
+  const handleTitleChange = (event) => {
+
+  }
 
   return (
         <header>
