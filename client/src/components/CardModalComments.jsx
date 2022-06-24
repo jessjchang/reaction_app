@@ -1,6 +1,11 @@
 import React from "react";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { createComment } from "../features/cards/cards";
 
 const CardModalComments = () => {
+  const dispatch = useDispatch();
+
   return (
     <li className="comment-section">
       <h2 className="comment-icon icon">Add Comment</h2>
