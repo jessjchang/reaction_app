@@ -36,7 +36,7 @@ const CardModal = () => {
       <div className="screen"></div>
       <div id="modal">
         <i className="x-icon icon close-modal"></i>
-        <CardModalHeader cardTitle={currentCard.title} listTitle={currentList.title} />
+        <CardModalHeader card={currentCard} listTitle={currentList.title} />
         <section className="modal-main">
           <ul className="modal-outer-list">
             <li className="details-section">

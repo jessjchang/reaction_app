@@ -1,21 +1,24 @@
 import React from "react";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { editCard } from "../features/cards/cards";
 
-const CardModalHeader = ({cardTitle, listTitle}) => {
-  if (!cardTitle || !listTitle) return null;
-
-  // change variable name to account for original title and edited (if at all) title?
-  [ cardTitle, setCardTitle ] = useState(cardTitle);
+const CardModalHeader = ({card, listTitle}) => {
+  const dispatch = useDispatch();
+  const [ cardTitle, setCardTitle ] = useState(card.title);
 
   const handleTitleChange = (event) => {
+    setCardTitle(event.target.value);
+  }
 
+  const handleEditTitle = () => {
+    dispatch(editCard({cardId: card._id, card: {"title": cardTitle}}));
   }
 
   return (
         <header>
           <i className="card-icon icon .close-modal"></i>
-          <textarea className="list-title" style={{ height: "45px" }}>
-            {cardTitle}
+          <textarea onChange={handleTitleChange} onBlur={handleEditTitle} className="list-title" style={{ height: "45px" }} value={cardTitle}>
           </textarea>
           <p>
             in list <a className="link">{listTitle}</a>
