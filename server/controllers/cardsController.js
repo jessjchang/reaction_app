@@ -79,8 +79,6 @@ const editCard = (req, res, next) => {
   if (errors.isEmpty()) {
     Card.findById(req.params.id)
       .then((card) => {
-        console.log('card', card);
-
         const attributes = ['title', 'dueDate', 'archived', 'completed', 'description', 'position', 'listId',  'dueDate' ];
 
         for (const attribute of attributes) {
@@ -98,7 +96,6 @@ const editCard = (req, res, next) => {
         next(new HttpError("Editing card failed, please try again", 500))
       );
   } else {
-    console.log('validator error(s?) ', errors);
     return next(new HttpError("Invalid card edit.", 404));
   }
 };

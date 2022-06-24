@@ -44,7 +44,7 @@ const CardModal = () => {
                 <CardModalLabels />
                 <CardModalDueDate />
               </ul>
-                <CardModalDescription />
+                <CardModalDescription card={currentCard} />
             </li>
               <CardModalComments />
               <CardModalActivity />
