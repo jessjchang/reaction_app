@@ -4,3 +4,4 @@ export const CREATE_LIST_URL = "/api/lists";
 export const LISTS_INDEX_URL = "/api/lists";
 export const CREATE_CARD_URL = "/api/cards";
 export const CARDS_INDEX_URL = "/api/cards";
+export const COMMENTS_INDEX_URL = "/api/comments";

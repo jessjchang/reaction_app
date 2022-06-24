@@ -4,6 +4,15 @@ import { fetchBoard } from "../boards/boards";
 
 const initialState = [];
 
+export const createComment = createAsyncThunk(
+  "cards/createComment",
+  async ({cardId, comment}) => {
+    const data = await apiClient.createComment(cardId, comment);
+
+    return data;
+  }
+);
+
 export const createCard = createAsyncThunk(
   "cards/createCard",
   async ({title, listId, callback}) => {
@@ -60,6 +69,10 @@ const cardSlice = createSlice({
     });
 
     builder.addCase(editCard.fulfilled, (state, action) => {
+      return state.map(card => card._id === action.payload._id ? action.payload : card);
+    });
+
+    builder.addCase(createComment.fulfilled, (state, action) => {
       return state.map(card => card._id === action.payload._id ? action.payload : card);
     });
   },
